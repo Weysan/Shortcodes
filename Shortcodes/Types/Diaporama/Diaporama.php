@@ -88,7 +88,7 @@ class Diaporama extends ScSanitize implements SCInterface
             });
 
             /* CLICK SUR BOUTON DE LA PAGINATION */
-                $('.paginations a').click(function(){
+                $(document).on('click', '.paginations a', function(){
                     var elementSlide = $(this).attr('class');
                     var indexSlide = elementSlide.replace(/[^0-9]/g, '');
                     mySwiper$iteration.swipeTo(indexSlide);
@@ -165,11 +165,11 @@ EOD;
             }
         });
 
-        $('.precedent').click(function(){
+        $(document).on('click', '.precedent', function(){
         	mySwiper$iteration.swipePrev();
         });
 
-        $('.suivant').click(function(){
+        $(document).on('click', '.suivant', function(){
         	mySwiper$iteration.swipeNext();
         });
     });
