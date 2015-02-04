@@ -14,7 +14,7 @@ class Content extends ScSanitize implements SCInterface
     public function filter($atts, $content = null)
     {
         
-        $content = self::clean($content, '<br>');
+        $content = self::clean($content, '<br><a>');
         
         $returnContent = '<div class="legende">';
         $returnContent .= $content;

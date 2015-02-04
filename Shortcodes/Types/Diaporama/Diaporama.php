@@ -26,9 +26,8 @@ class Diaporama extends ScSanitize implements SCInterface
     protected function countSlide($slides)
     {
         $aSlides = explode('[/slide]', $slides);
-        
         foreach($aSlides as $key => $slide){
-            if(trim($slide) === '')
+            if(strip_tags(nl2br(trim($slide))) === '')
                 unset($aSlides[$key]);
         }
         

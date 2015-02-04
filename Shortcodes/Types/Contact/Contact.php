@@ -37,7 +37,7 @@ class Contact extends ScSanitize implements SCInterface
         $returnContent .= '<input type="text" placeholder="Your Phone*" '
                 . 'id="phone" name="phone" value="Your Phone*" '
                 . 'onfocus="if(this.value==\'Your Phone*\')this.value=\'\';">';
-        $returnContent .= '<textarea name="message">Your Message*</textarea>';
+        $returnContent .= '<textarea onfocus="if(this.value==\'Your Message*\')this.value=\'\';" name="message">Your Message*</textarea>';
         $returnContent .= '<input type="submit" id="submit" name="submit" value="Send">';
         $returnContent .= '</form>';
         
