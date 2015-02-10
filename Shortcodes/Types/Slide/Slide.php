@@ -13,7 +13,7 @@ class Slide extends ScSanitize implements SCInterface
 {
     public function filter($atts, $content = null)
     {
-        $content = self::clean($content, '<img>,<br>');
+        $content = self::clean($content, '<img><br><b><strong><u><em><ul><li>');
         
         
         if(count($atts) && isset($atts['titre'])){

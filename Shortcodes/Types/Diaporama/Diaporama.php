@@ -14,7 +14,7 @@ class Diaporama extends ScSanitize implements SCInterface
     public function filter($atts, $content = null)
     {
         
-        $content = self::clean($content, '<img><br>');
+        $content = self::clean($content, '<img><br><b><strong><u><em><ul><li>');
         
         if(self::countSlide($content) === 1){
             return self::oneSlide($content);

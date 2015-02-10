@@ -17,7 +17,7 @@ class Article extends ScSanitize implements SCInterface
     public function filter($atts, $content = null)
     {
         
-        $content = self::clean($content, '<h2>,<p>,<hr>,<img>,<h3>,<a>');
+        $content = self::clean($content, '<h2>,<p>,<hr>,<img>,<h3>,<a>,<b>,<strong>,<u>,<em>,<ul>,<li>');
         
         $returnContent = '';
         if(count($atts) && isset($atts['titre'])){
