@@ -17,7 +17,7 @@ class Legend extends ScSanitize implements SCInterface
     public function filter($atts, $content = null)
     {
         
-        $content = self::clean($content, '<h3><p><a><b><strong><u><em><ul><li>');
+        $content = self::clean($content, '<h3><p><a><b><strong><u><em><ul><li><span>');
         
         $returnContent = '<figcaption><hr />';
         $returnContent .= $content;

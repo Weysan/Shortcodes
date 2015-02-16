@@ -34,9 +34,18 @@ class Contact extends ScSanitize implements SCInterface
         $returnContent .= '<input type="text" placeholder="Your Email*" 
             id="email" name="email" value="Your Email*" 
             onfocus="if(this.value==\'Your Email*\')this.value=\'\';">';
-        $returnContent .= '<input type="text" placeholder="Your Phone*" '
-                . 'id="phone" name="phone" value="Your Phone*" '
-                . 'onfocus="if(this.value==\'Your Phone*\')this.value=\'\';">';
+        
+        $returnContent .= '<input type="text" placeholder="Your Country*" 
+            id="country" name="country" value="Your Country*" 
+            onfocus="if(this.value==\'Your Country*\')this.value=\'\';">';
+        
+        $returnContent .= '<input type="text" placeholder="Your City" 
+            id="city" name="city" value="Your City" 
+            onfocus="if(this.value==\'Your City\')this.value=\'\';">';
+        
+        $returnContent .= '<input type="text" placeholder="Your Phone" '
+                . 'id="phone" name="phone" value="Your Phone" '
+                . 'onfocus="if(this.value==\'Your Phone\')this.value=\'\';">';
         $returnContent .= '<textarea onfocus="if(this.value==\'Your Message*\')this.value=\'\';" name="message">Your Message*</textarea>';
         $returnContent .= '<input type="submit" id="submit" name="submit" value="Send">';
         $returnContent .= '</form>';
@@ -57,17 +66,25 @@ class Contact extends ScSanitize implements SCInterface
         }
         
         $clean_to = filter_var($atts['to'], FILTER_VALIDATE_EMAIL);
-        $clean_subject = filter_var($atts['to'], FILTER_DEFAULT);
+        $clean_subject = filter_var($atts['subject'], FILTER_DEFAULT);
         
         if(isset($_POST) && !empty($_POST)){
             $clean['name'] = filter_var($_POST['name_user'], FILTER_DEFAULT);
             $clean['company'] = filter_var($_POST['company'], FILTER_DEFAULT);
             $clean['mail'] = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+            
+            $clean['country'] = filter_var($_POST['country'], FILTER_DEFAULT);
+            
             $clean['phone'] = filter_var($_POST['phone'], FILTER_DEFAULT);
+            if($clean['phone'] === false || $clean['phone'] == '' || $clean['phone'] == 'Your Phone') $clean['phone'] = 'none';
+            
+            $clean['city'] = filter_var($_POST['city'], FILTER_DEFAULT);
+            if($clean['city'] === false || $clean['city'] == '' || $clean['city'] == 'Your City') $clean['city'] = 'none';
+            
             $clean['message'] = nl2br( filter_var($_POST['message'], FILTER_DEFAULT) );
 
             if(in_array(false, $clean)){
-                return '<p class="error">Le formulaire présente des erreur.</p>';
+                return '<p class="error">There is errors in the form.</p>';
             } else {
                 $headers = "From: Delair Tech <no-reply@delairtech.com>\r\n";
                 $headers .= 'MIME-Version: 1.0' . "\r\n";
@@ -81,13 +98,11 @@ class Contact extends ScSanitize implements SCInterface
                 if(!empty($message)){
                     $send = wp_mail($clean_to, $clean_subject, $message, $headers);
                     if($send)
-                        return '<p class="validation">Votre message a été transmis.</p>';
+                        return '<p class="validation">Your message has been sent.</p>';
                     else
-                        return '<p class="error">Une erreur s\'est produite '
-                    . 'lors de l\'envoie du mail.</p>';
+                        return '<p class="error">An error occured.</p>';
                 } else {
-                    return '<p class="error">Une erreur s\'est produite '
-                    . 'lors de l\'envoie du mail.</p>';
+                    return '<p class="error">An error occured.</p>';
                 }
             }
         }
