@@ -16,6 +16,7 @@ abstract class ScSanitize
 and '<p>' == substr( $content, strlen( $content ) - 3 ) )
 	$content = substr( $content, 4, strlen( $content ) - 7 );
         
+        $content = str_replace('<br />[', '[', $content);
         
         return $content;
         

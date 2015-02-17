@@ -33,7 +33,7 @@ class Contact extends ScSanitize implements SCInterface
                 . 'onfocus="if(this.value==\'Your Company*\')this.value=\'\';">';
         $returnContent .= '<input type="text" placeholder="Your Email*" 
             id="email" name="email" value="Your Email*" 
-            onfocus="if(this.value==\'Your Email*\')this.value=\'\';">';
+            onfocus="if(this.value==\'Your Email*\')this.value=\'\';"><br />';
         
         $returnContent .= '<input type="text" placeholder="Your Country*" 
             id="country" name="country" value="Your Country*" 

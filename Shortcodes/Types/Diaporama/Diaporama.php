@@ -164,11 +164,11 @@ EOD;
             }
         });
 
-        $(document).on('click', '.precedent', function(){
+        $(document).on('click', '#swiper-container$iteration .precedent', function(){
         	mySwiper$iteration.swipePrev();
         });
 
-        $(document).on('click', '.suivant', function(){
+        $(document).on('click', '#swiper-container$iteration .suivant', function(){
         	mySwiper$iteration.swipeNext();
         });
     });
