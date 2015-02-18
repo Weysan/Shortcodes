@@ -24,29 +24,80 @@ class Contact extends ScSanitize implements SCInterface
         if(!empty($retour))
             $returnContent .= $retour;
         
-        $returnContent .= '<form method="post" action="'.  get_the_permalink($post->ID).'">';
+        
+        if(isset($_POST) && !empty($_POST) && preg_match('#error#', $retour)){
+            $clean['name'] = filter_var($_POST['name_user'], FILTER_DEFAULT);
+            $clean['company'] = filter_var($_POST['company'], FILTER_DEFAULT);
+            $clean['mail'] = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+            
+            $clean['country'] = filter_var($_POST['country'], FILTER_DEFAULT);
+            
+            $clean['phone'] = filter_var($_POST['phone'], FILTER_DEFAULT);
+            
+            $clean['city'] = filter_var($_POST['city'], FILTER_DEFAULT);
+            
+            $clean['message'] = nl2br( filter_var($_POST['message'], FILTER_DEFAULT) );
+        }
+        
+        
+        $returnContent .= '<form method="post" action="'.  get_the_permalink($post->ID).'#_">';
         $returnContent .= '<input type="text" placeholder="Your Name*" id="name" '
-                . 'name="name_user" value="Your Name*" '
+                . 'name="name_user" value="';
+        
+        if(isset($clean['name']) && !empty($clean['name'])) $returnContent .= $clean['name'];
+        else $returnContent .= 'Your Name*';
+        
+        $returnContent .= '" '
                 . 'onfocus="if(this.value==\'Your Name*\')this.value=\'\';">';
-        $returnContent .= '<input type="text" placeholder="Your Company*" '
-                . 'id="company" name="company" value="Your Company*" '
+        $returnContent .= '<input type="text" placeholder="Your Company" '
+                . 'id="company" name="company" value="';
+        
+        if(isset($clean['company']) && !empty($clean['company'])) $returnContent .= $clean['company'];
+        else $returnContent .= 'Your Company*';
+        
+        $returnContent .= '" '
                 . 'onfocus="if(this.value==\'Your Company*\')this.value=\'\';">';
         $returnContent .= '<input type="text" placeholder="Your Email*" 
-            id="email" name="email" value="Your Email*" 
+            id="email" name="email" value="';
+        
+        if(isset($clean['mail']) && !empty($clean['mail'])) $returnContent .= $clean['mail'];
+        else $returnContent .= 'Your Email*';
+        
+        $returnContent .= '" 
             onfocus="if(this.value==\'Your Email*\')this.value=\'\';"><br />';
         
         $returnContent .= '<input type="text" placeholder="Your Country*" 
-            id="country" name="country" value="Your Country*" 
+            id="country" name="country" value="';
+        
+        if(isset($clean['country']) && !empty($clean['country'])) $returnContent .= $clean['country'];
+        else $returnContent .= 'Your Country*';
+        
+        $returnContent .= '" 
             onfocus="if(this.value==\'Your Country*\')this.value=\'\';">';
         
         $returnContent .= '<input type="text" placeholder="Your City" 
-            id="city" name="city" value="Your City" 
+            id="city" name="city" value="';
+        
+        if(isset($clean['city']) && !empty($clean['city'])) $returnContent .= $clean['city'];
+        else $returnContent .= 'Your City';
+        
+        $returnContent .= '" 
             onfocus="if(this.value==\'Your City\')this.value=\'\';">';
         
         $returnContent .= '<input type="text" placeholder="Your Phone" '
-                . 'id="phone" name="phone" value="Your Phone" '
+                . 'id="phone" name="phone" value="';
+        
+        if(isset($clean['phone']) && !empty($clean['phone'])) $returnContent .= $clean['phone'];
+        else $returnContent .= 'Your Phone';
+        
+        $returnContent .= '" '
                 . 'onfocus="if(this.value==\'Your Phone\')this.value=\'\';">';
-        $returnContent .= '<textarea onfocus="if(this.value==\'Your Message*\')this.value=\'\';" name="message">Your Message*</textarea>';
+        $returnContent .= '<textarea onfocus="if(this.value==\'Your Message*\')this.value=\'\';" name="message">';
+        
+        if(isset($clean['message']) && !empty($clean['message'])) $returnContent .= $clean['message'];
+        else $returnContent .= 'Your Message*';
+        
+        $returnContent .= '</textarea>';
         $returnContent .= '<input type="submit" id="submit" name="submit" value="Send">';
         $returnContent .= '</form>';
         
@@ -83,8 +134,14 @@ class Contact extends ScSanitize implements SCInterface
             
             $clean['message'] = nl2br( filter_var($_POST['message'], FILTER_DEFAULT) );
 
-            if(in_array(false, $clean)){
-                return '<p class="error">There is errors in the form.</p>';
+            if(in_array(false, $clean) ||
+                    ( !empty($clean['name']) || 'Your Name*' != $clean['name'] ) || 
+                    ( !empty($clean['company']) || 'Your Company*' != $clean['company'] ) || 
+                    ( !empty($clean['mail']) || 'Your Email*' != $clean['mail'] ) || 
+                    ( !empty($clean['country']) || 'Your Country*' != $clean['country'] ) || 
+                    ( !empty($clean['message']) || 'Your Message*' != $clean['message'] )
+                    ){
+                return '<p class="error">Please check the form, it seems there are some errors.</p>';
             } else {
                 $headers = "From: Delair Tech <no-reply@delairtech.com>\r\n";
                 $headers .= 'MIME-Version: 1.0' . "\r\n";
