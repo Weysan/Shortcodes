@@ -92,6 +92,8 @@ class Diaporama extends ScSanitize implements SCInterface
                     var indexSlide = elementSlide.replace(/[^0-9]/g, '');
                     mySwiper$iteration.swipeTo(indexSlide);
                 });
+                
+                reinitSwiper(mySwiper$iteration);
 
         });
 
