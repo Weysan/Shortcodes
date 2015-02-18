@@ -171,6 +171,9 @@ EOD;
         $(document).on('click', '#swiper-container$iteration .suivant', function(){
         	mySwiper$iteration.swipeNext();
         });
+                
+        reinitSwiper(mySwiper$iteration);
+                
     });
 EOD;
         
