@@ -39,8 +39,8 @@ class Contact extends ScSanitize implements SCInterface
             $clean['message'] = nl2br( filter_var($_POST['message'], FILTER_DEFAULT) );
         }
         
-        
-        $returnContent .= '<form method="post" action="'.  get_the_permalink($post->ID).'#_">';
+        $returnContent .= '<a name="form-contact">&nbsp;</a>';
+        $returnContent .= '<form method="post" action="'.  get_the_permalink($post->ID).'#form-contact">';
         $returnContent .= '<input type="text" placeholder="Your Name*" id="name" '
                 . 'name="name_user" value="';
         
@@ -135,11 +135,11 @@ class Contact extends ScSanitize implements SCInterface
             $clean['message'] = nl2br( filter_var($_POST['message'], FILTER_DEFAULT) );
 
             if(in_array(false, $clean) ||
-                    ( !empty($clean['name']) || 'Your Name*' != $clean['name'] ) || 
-                    ( !empty($clean['company']) || 'Your Company*' != $clean['company'] ) || 
-                    ( !empty($clean['mail']) || 'Your Email*' != $clean['mail'] ) || 
-                    ( !empty($clean['country']) || 'Your Country*' != $clean['country'] ) || 
-                    ( !empty($clean['message']) || 'Your Message*' != $clean['message'] )
+                    ( empty($clean['name']) || 'Your Name*' == $clean['name'] ) || 
+                    ( empty($clean['company']) || 'Your Company*' == $clean['company'] ) || 
+                    ( empty($clean['mail']) || 'Your Email*' == $clean['mail'] ) || 
+                    ( empty($clean['country']) || 'Your Country*' == $clean['country'] ) || 
+                    ( empty($clean['message']) || 'Your Message*' == $clean['message'] )
                     ){
                 return '<p class="error">Please check the form, it seems there are some errors.</p>';
             } else {
