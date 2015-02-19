@@ -17,7 +17,7 @@ class Figure extends ScSanitize implements SCInterface
     public function filter($atts, $content = null)
     {
         
-        $content = self::clean($content, '<h3><p><hr><img><b><strong><u><em><span>');
+        $content = self::clean($content, '<h3><p><hr><img><b><strong><u><em><span><a>');
         
         $returnContent = '<figure>';
         $returnContent .= do_shortcode($content);
