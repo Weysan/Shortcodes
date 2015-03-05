@@ -14,10 +14,10 @@ class Diaporama extends ScSanitize implements SCInterface
     public function filter($atts, $content = null)
     {
         
-        $content = self::clean($content, '<img><br><b><strong><u><em><ul><li><span>');
+        $content = self::clean($content, '<img><br><b><strong><u><em><ul><li><span><a>');
         
         if(self::countSlide($content) === 1){
-            return self::oneSlide($content);
+            return self::oneSlide($content, $atts);
         } else {
             return self::multipleSlide($content, $atts);
         }
@@ -35,12 +35,22 @@ class Diaporama extends ScSanitize implements SCInterface
         
     }
     
-    protected function oneSlide($content)
+    protected function oneSlide($content, $atts)
     {
         $content = str_replace(array('[slide]', '[/slide]'), '', $content);
         
         $returnContent = '<div class="header">';
         $returnContent .= do_shortcode($content);
+        
+        if(count($atts) && !empty($atts)){
+            $returnContent .= '<div class="content_descriptif">';
+            $returnContent .= '    <p class="entete">'.$atts['titre'].'</p>';
+            $returnContent .= '    <p>'.$atts['texte'].'</p>';
+            $returnContent .= '</div>';
+        }
+        
+        
+        
         $returnContent .= '</div>';
         
         return $returnContent;
@@ -93,7 +103,7 @@ class Diaporama extends ScSanitize implements SCInterface
                     mySwiper$iteration.swipeTo(indexSlide);
                 });
                 
-                reinitSwiper(mySwiper$iteration);
+                // reinitSwiper(mySwiper$iteration);
 
         });
 
@@ -174,7 +184,7 @@ EOD;
         	mySwiper$iteration.swipeNext();
         });
                 
-        reinitSwiper(mySwiper$iteration);
+        // reinitSwiper(mySwiper$iteration);
                 
     });
 EOD;
