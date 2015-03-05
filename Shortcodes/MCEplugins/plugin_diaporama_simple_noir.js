@@ -21,5 +21,5 @@
 			return null;
 		}
 	});
-	tinymce.PluginManager.add('diaposimplenoir', tinymce.plugins.Diaposimplenoir);
+	tinymce.PluginManager.add('Diaposimplenoir', tinymce.plugins.Diaposimplenoir);
 })();
