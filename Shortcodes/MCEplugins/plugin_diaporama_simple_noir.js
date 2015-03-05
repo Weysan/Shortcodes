@@ -1,7 +1,8 @@
 (function() {
+    console.log('là');
 	tinymce.create('tinymce.plugins.Diaposimplenoir', {
 		init : function(ed, url) {
-			ed.addButton('Diaposimplenoir', {
+			ed.addButton('diaposimplenoir', {
 				title : 'Diaporama avec une seule image et fond noir',
 				image : url+'/../../../custom/img/diapo_image_inv.png',
 				onclick : function() {
@@ -21,5 +22,5 @@
 			return null;
 		}
 	});
-	tinymce.PluginManager.add('Diaposimplenoir', tinymce.plugins.Diaposimplenoir);
+	tinymce.PluginManager.add('diaposimplenoir', tinymce.plugins.Diaposimplenoir);
 })();
