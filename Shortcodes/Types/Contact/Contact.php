@@ -129,7 +129,7 @@ class Contact extends ScSanitize implements SCInterface
         }
         
         $clean_to = filter_var($atts['to'], FILTER_VALIDATE_EMAIL);
-        $clean_to = 'raphael@couleur-citron.com';
+
         $clean_subject = filter_var($atts['subject'], FILTER_DEFAULT);
         
         if(isset($_POST) && !empty($_POST)){
