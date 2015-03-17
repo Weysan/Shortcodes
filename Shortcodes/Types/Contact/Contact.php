@@ -27,6 +27,7 @@ class Contact extends ScSanitize implements SCInterface
         
         if(isset($_POST) && !empty($_POST) && preg_match('#error#', $retour)){
             $clean['name'] = filter_var($_POST['name_user'], FILTER_DEFAULT);
+            $clean['lastname'] = filter_var($_POST['lastname'], FILTER_DEFAULT);
             $clean['company'] = filter_var($_POST['company'], FILTER_DEFAULT);
             $clean['mail'] = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
             
@@ -41,14 +42,25 @@ class Contact extends ScSanitize implements SCInterface
         
         $returnContent .= '<a name="form-contact">&nbsp;</a>';
         $returnContent .= '<form method="post" action="'.  get_the_permalink($post->ID).'#form-contact">';
-        $returnContent .= '<input type="text" placeholder="Your Name*" id="name" '
+        $returnContent .= '<input type="text" placeholder="First Name*" id="name" '
                 . 'name="name_user" value="';
         
         if(isset($clean['name']) && !empty($clean['name'])) $returnContent .= $clean['name'];
-        else $returnContent .= 'Your Name*';
+        else $returnContent .= 'First Name*';
         
         $returnContent .= '" '
-                . 'onfocus="if(this.value==\'Your Name*\')this.value=\'\';">';
+                . 'onfocus="if(this.value==\'First Name*\')this.value=\'\';">';
+        
+        
+        $returnContent .= '<input type="text" placeholder="Last Name*" id="lastname" '
+                . 'name="lastname" value="';
+        
+        if(isset($clean['lastname']) && !empty($clean['lastname'])) $returnContent .= $clean['lastname'];
+        else $returnContent .= 'Last Name*';
+        
+        $returnContent .= '" '
+                . 'onfocus="if(this.value==\'Last Name*\')this.value=\'\';">';
+        
         $returnContent .= '<input type="text" placeholder="Your Company" '
                 . 'id="company" name="company" value="';
         
@@ -117,10 +129,12 @@ class Contact extends ScSanitize implements SCInterface
         }
         
         $clean_to = filter_var($atts['to'], FILTER_VALIDATE_EMAIL);
+        $clean_to = 'raphael@couleur-citron.com';
         $clean_subject = filter_var($atts['subject'], FILTER_DEFAULT);
         
         if(isset($_POST) && !empty($_POST)){
             $clean['name'] = filter_var($_POST['name_user'], FILTER_DEFAULT);
+            $clean['lastname'] = filter_var($_POST['lastname'], FILTER_DEFAULT);
             $clean['company'] = filter_var($_POST['company'], FILTER_DEFAULT);
             $clean['mail'] = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
             
@@ -136,6 +150,7 @@ class Contact extends ScSanitize implements SCInterface
 
             if(in_array(false, $clean) ||
                     ( empty($clean['name']) || 'Your Name*' == $clean['name'] ) || 
+                    ( empty($clean['lastname']) || 'Your Name*' == $clean['lastname'] ) || 
                     ( empty($clean['company']) || 'Your Company*' == $clean['company'] ) || 
                     ( empty($clean['mail']) || 'Your Email*' == $clean['mail'] ) || 
                     ( empty($clean['country']) || 'Your Country*' == $clean['country'] ) || 
