@@ -61,14 +61,6 @@ class Contact extends ScSanitize implements SCInterface
         $returnContent .= '" '
                 . 'onfocus="if(this.value==\'Last Name*\')this.value=\'\';">';
         
-        $returnContent .= '<input type="text" placeholder="Your Company" '
-                . 'id="company" name="company" value="';
-        
-        if(isset($clean['company']) && !empty($clean['company'])) $returnContent .= $clean['company'];
-        else $returnContent .= 'Your Company*';
-        
-        $returnContent .= '" '
-                . 'onfocus="if(this.value==\'Your Company*\')this.value=\'\';">';
         $returnContent .= '<input type="text" placeholder="Your Email*" 
             id="email" name="email" value="';
         
@@ -104,6 +96,16 @@ class Contact extends ScSanitize implements SCInterface
         
         $returnContent .= '" '
                 . 'onfocus="if(this.value==\'Your Phone\')this.value=\'\';">';
+
+        $returnContent .= '<input type="text" placeholder="Your Company" '
+                . 'id="company" name="company" value="';
+        
+        if(isset($clean['company']) && !empty($clean['company'])) $returnContent .= $clean['company'];
+        else $returnContent .= 'Your Company*';
+        
+        $returnContent .= '" '
+                . 'onfocus="if(this.value==\'Your Company*\')this.value=\'\';">';
+                
         $returnContent .= '<textarea onfocus="if(this.value==\'Your Message*\')this.value=\'\';" name="message">';
         
         if(isset($clean['message']) && !empty($clean['message'])) $returnContent .= $clean['message'];
