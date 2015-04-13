@@ -160,7 +160,7 @@ class Contact extends ScSanitize implements SCInterface
                     ){
                 return '<p class="error">Please check the form, it seems there are some errors.</p>';
             } else {
-                $headers = "From: Delair Tech <no-reply@delairtech.com>\r\n";
+                $headers = "From: Delair Tech <contact@delair-tech.com>\r\n";
                 $headers .= 'MIME-Version: 1.0' . "\r\n";
                 $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
                 
@@ -171,15 +171,39 @@ class Contact extends ScSanitize implements SCInterface
                 
                 if(!empty($message)){
                     $send = wp_mail($clean_to, $clean_subject, $message, $headers);
-                    if($send)
+					//$send = mail($clean_to, $clean_subject, $message, $headers);
+                    $id = self::save($clean['mail'], $message);
+                    
+                    if($send || $id){
                         return '<p class="validation">Your message has been sent.</p>';
-                    else
-                        return '<p class="error">An error occured.</p>';
+                    } else {
+                        //var_dump($send);
+                        
+                        return '<p class="error">An error occured during sending your email.</p>';
+                    }
                 } else {
                     return '<p class="error">An error occured.</p>';
                 }
             }
         }
         return;
+    }
+    
+    private function save($mail, $message){
+        
+        
+        $post_id = wp_insert_post(
+		array(
+			'comment_status'	=>	'closed',
+			'ping_status'		=>	'closed',
+			'post_author'		=>	1,
+			'post_title'		=>	$mail,
+			'post_status'		=>	'publish',
+			'post_type'		=>	'contact_content',
+                        'post_content'          =>      $message
+		)
+	);
+        
+        return $post_id;
     }
 }
