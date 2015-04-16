@@ -40,7 +40,7 @@ class Contact extends ScSanitize implements SCInterface
             $clean['message'] = nl2br( filter_var($_POST['message'], FILTER_DEFAULT) );
         }
         
-        $returnContent .= '<a name="form-contact">&nbsp;</a>';
+        $returnContent .= '<a name="form-contact" id="ancre-contact">&nbsp;</a>';
         $returnContent .= '<form method="post" action="'.  get_the_permalink($post->ID).'#form-contact">';
         $returnContent .= '<input type="text" placeholder="First Name*" id="name" '
                 . 'name="name_user" value="';
